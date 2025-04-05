@@ -2148,8 +2148,8 @@ OS:ThermalZone,
   ,                                       !- Ceiling Height {m}
   ,                                       !- Volume {m3}
   ,                                       !- Floor Area {m2}
-  ,                                       !- Zone Inside Convection Algorithm
-  ,                                       !- Zone Outside Convection Algorithm
+  Simple,                                 !- Zone Inside Convection Algorithm
+  SimpleCombined,                         !- Zone Outside Convection Algorithm
   ,                                       !- Zone Conditioning Equipment List Name
   {9920f6ca-18cd-4b5a-9d62-4949ef488945}, !- Zone Air Inlet Port List
   {f34ed7bc-f7b1-4c50-9b58-53f65bb8e518}, !- Zone Air Exhaust Port List
@@ -2179,7 +2179,8 @@ OS:Connection,
 
 OS:PortList,
   {9920f6ca-18cd-4b5a-9d62-4949ef488945}, !- Handle
-  {e6ce75cb-a91a-4e15-aec3-43479fc9b1b1}; !- HVAC Component
+  {e6ce75cb-a91a-4e15-aec3-43479fc9b1b1}, !- HVAC Component
+  {598ad24f-4bf6-43e6-89c8-f9a4ed4f8bbc}; !- Port 1
 
 OS:PortList,
   {f34ed7bc-f7b1-4c50-9b58-53f65bb8e518}, !- Handle
@@ -2187,7 +2188,8 @@ OS:PortList,
 
 OS:PortList,
   {3ed9d60e-d636-429e-aa4a-f9730306fdbf}, !- Handle
-  {e6ce75cb-a91a-4e15-aec3-43479fc9b1b1}; !- HVAC Component
+  {e6ce75cb-a91a-4e15-aec3-43479fc9b1b1}, !- HVAC Component
+  {3a3e6c9e-d44a-4760-8626-e79ce950c4f9}; !- Port 1
 
 OS:Sizing:Zone,
   {fe502d1b-5875-4499-a10a-54683738419a}, !- Handle
@@ -2227,7 +2229,18 @@ OS:Sizing:Zone,
 OS:ZoneHVAC:EquipmentList,
   {8d2e7f46-cb32-4f6f-895a-c7730734cf8d}, !- Handle
   Zone HVAC Equipment List 1,             !- Name
-  {e6ce75cb-a91a-4e15-aec3-43479fc9b1b1}; !- Thermal Zone
+  {e6ce75cb-a91a-4e15-aec3-43479fc9b1b1}, !- Thermal Zone
+  ,                                       !- Load Distribution Scheme
+  {b42cefd8-9b97-40d6-9bd8-d3e2a2dfc491}, !- Zone Equipment 1
+  1,                                      !- Zone Equipment Cooling Sequence 1
+  1,                                      !- Zone Equipment Heating or No-Load Sequence 1
+  ,                                       !- Zone Equipment Sequential Cooling Fraction Schedule Name 1
+  ,                                       !- Zone Equipment Sequential Heating Fraction Schedule Name 1
+  {a36b02bc-1650-4aea-b766-dfac38ced69b}, !- Zone Equipment 2
+  2,                                      !- Zone Equipment Cooling Sequence 2
+  2,                                      !- Zone Equipment Heating or No-Load Sequence 2
+  ,                                       !- Zone Equipment Sequential Cooling Fraction Schedule Name 2
+  ;                                       !- Zone Equipment Sequential Heating Fraction Schedule Name 2
 
 OS:Rendering:Color,
   {a072bdf7-0bcd-4dd8-9c69-2455e6c24cbf}, !- Handle
@@ -2520,4 +2533,634 @@ OS:Surface,
   0, 12, 0,                               !- X,Y,Z Vertex 2 {m}
   8, 12, 0,                               !- X,Y,Z Vertex 3 {m}
   8, 0, 0;                                !- X,Y,Z Vertex 4 {m}
+
+OS:ZoneVentilation:DesignFlowRate,
+  {b42cefd8-9b97-40d6-9bd8-d3e2a2dfc491}, !- Handle
+  Natural Ventilation,                    !- Name
+  {93de6f80-ba78-4def-8cf8-4f9d4a0b6f39}, !- Schedule Name
+  AirChanges/Hour,                        !- Design Flow Rate Calculation Method
+  0,                                      !- Design Flow Rate {m3/s}
+  0,                                      !- Flow Rate per Zone Floor Area {m3/s-m2}
+  0,                                      !- Flow Rate per Person {m3/s-person}
+  5,                                      !- Air Changes per Hour {1/hr}
+  Natural,                                !- Ventilation Type
+  0,                                      !- Fan Pressure Rise {Pa}
+  1,                                      !- Fan Total Efficiency
+  0.606,                                  !- Constant Term Coefficient
+  0.03636,                                !- Temperature Term Coefficient
+  0.1177,                                 !- Velocity Term Coefficient
+  0,                                      !- Velocity Squared Term Coefficient
+  18,                                     !- Minimum Indoor Temperature {C}
+  ,                                       !- Minimum Indoor Temperature Schedule Name
+  100,                                    !- Maximum Indoor Temperature {C}
+  ,                                       !- Maximum Indoor Temperature Schedule Name
+  1,                                      !- Delta Temperature {deltaC}
+  ,                                       !- Delta Temperature Schedule Name
+  -100,                                   !- Minimum Outdoor Temperature {C}
+  ,                                       !- Minimum Outdoor Temperature Schedule Name
+  100,                                    !- Maximum Outdoor Temperature {C}
+  ,                                       !- Maximum Outdoor Temperature Schedule Name
+  40;                                     !- Maximum Wind Speed {m/s}
+
+OS:AirLoopHVAC,
+  {3b3a4004-4247-460f-a359-e97080aa3a1a}, !- Handle
+  Air Loop HVAC 1,                        !- Name
+  ,                                       !- Controller List Name
+  {762b35ba-eeca-4088-bc4b-ccb3939479ba}, !- Availability Schedule
+  {71a021e2-a3f6-4617-8dad-68861bb07bb6}, !- Availability Manager List Name
+  autosize,                               !- Design Supply Air Flow Rate {m3/s}
+  1,                                      !- Design Return Air Flow Fraction of Supply Air Flow
+  ,                                       !- Branch List Name
+  ,                                       !- Connector List Name
+  {f868d213-6dbd-462a-bbdf-46b33ba62d5c}, !- Supply Side Inlet Node Name
+  {04117af7-b748-4d64-95be-b09787dcd774}, !- Demand Side Outlet Node Name
+  {b75b53cc-704f-48fc-980b-8f88611438c0}, !- Demand Side Inlet Node A
+  {8a05badb-ae19-481d-b0ac-a0273b67345d}, !- Supply Side Outlet Node A
+  ,                                       !- Demand Side Inlet Node B
+  ,                                       !- Supply Side Outlet Node B
+  ,                                       !- Return Air Bypass Flow Temperature Setpoint Schedule Name
+  {8e182e1f-134b-410a-ba47-8b5dea617c11}, !- Demand Mixer Name
+  {d12270cc-4902-4b2c-b9f6-50aeca1dff22}, !- Demand Splitter A Name
+  ,                                       !- Demand Splitter B Name
+  ;                                       !- Supply Splitter Name
+
+OS:Node,
+  {62be3a8f-da44-47fd-a5c6-d9b0fe38071a}, !- Handle
+  Node 2,                                 !- Name
+  {f868d213-6dbd-462a-bbdf-46b33ba62d5c}, !- Inlet Port
+  {c71c2fc4-28fa-47e1-b70d-d5a911c49c97}; !- Outlet Port
+
+OS:Node,
+  {c5c468f0-52fe-42e9-8fb7-042e87ab61c8}, !- Handle
+  Node 3,                                 !- Name
+  {37fcf438-c8b8-48da-a366-40a84c988ec6}, !- Inlet Port
+  {8a05badb-ae19-481d-b0ac-a0273b67345d}; !- Outlet Port
+
+OS:Connection,
+  {f868d213-6dbd-462a-bbdf-46b33ba62d5c}, !- Handle
+  {3b3a4004-4247-460f-a359-e97080aa3a1a}, !- Source Object
+  9,                                      !- Outlet Port
+  {62be3a8f-da44-47fd-a5c6-d9b0fe38071a}, !- Target Object
+  2;                                      !- Inlet Port
+
+OS:Connection,
+  {8a05badb-ae19-481d-b0ac-a0273b67345d}, !- Handle
+  {c5c468f0-52fe-42e9-8fb7-042e87ab61c8}, !- Source Object
+  3,                                      !- Outlet Port
+  {3b3a4004-4247-460f-a359-e97080aa3a1a}, !- Target Object
+  12;                                     !- Inlet Port
+
+OS:Node,
+  {ed9e9f7c-2b3e-48ad-ab8f-a3f17bb843b5}, !- Handle
+  Node 4,                                 !- Name
+  {b75b53cc-704f-48fc-980b-8f88611438c0}, !- Inlet Port
+  {3faafec6-634c-479d-805a-1328f583349a}; !- Outlet Port
+
+OS:Node,
+  {c81b7a2d-938c-4630-ac34-409efd9d7448}, !- Handle
+  Node 5,                                 !- Name
+  {cdb3df2f-7cc4-4333-85ff-897960763d9b}, !- Inlet Port
+  {04117af7-b748-4d64-95be-b09787dcd774}; !- Outlet Port
+
+OS:Node,
+  {5f6606cb-b9c2-40e9-97b4-0d3f0c542693}, !- Handle
+  Node 6,                                 !- Name
+  {50dcc2a2-6823-4351-afa5-372cf5b948a7}, !- Inlet Port
+  {598ad24f-4bf6-43e6-89c8-f9a4ed4f8bbc}; !- Outlet Port
+
+OS:Connection,
+  {b75b53cc-704f-48fc-980b-8f88611438c0}, !- Handle
+  {3b3a4004-4247-460f-a359-e97080aa3a1a}, !- Source Object
+  11,                                     !- Outlet Port
+  {ed9e9f7c-2b3e-48ad-ab8f-a3f17bb843b5}, !- Target Object
+  2;                                      !- Inlet Port
+
+OS:Connection,
+  {04117af7-b748-4d64-95be-b09787dcd774}, !- Handle
+  {c81b7a2d-938c-4630-ac34-409efd9d7448}, !- Source Object
+  3,                                      !- Outlet Port
+  {3b3a4004-4247-460f-a359-e97080aa3a1a}, !- Target Object
+  10;                                     !- Inlet Port
+
+OS:AirLoopHVAC:ZoneSplitter,
+  {d12270cc-4902-4b2c-b9f6-50aeca1dff22}, !- Handle
+  Air Loop HVAC Zone Splitter 1,          !- Name
+  {3faafec6-634c-479d-805a-1328f583349a}, !- Inlet Node Name
+  {b53059a7-12c1-4092-b0cc-5fa26c6cf3e5}; !- Outlet Node Name 1
+
+OS:AirLoopHVAC:ZoneMixer,
+  {8e182e1f-134b-410a-ba47-8b5dea617c11}, !- Handle
+  Air Loop HVAC Zone Mixer 1,             !- Name
+  {cdb3df2f-7cc4-4333-85ff-897960763d9b}, !- Outlet Node Name
+  {990f9a65-5add-42dd-8483-a7b3752049e3}; !- Inlet Node Name 1
+
+OS:Connection,
+  {3faafec6-634c-479d-805a-1328f583349a}, !- Handle
+  {ed9e9f7c-2b3e-48ad-ab8f-a3f17bb843b5}, !- Source Object
+  3,                                      !- Outlet Port
+  {d12270cc-4902-4b2c-b9f6-50aeca1dff22}, !- Target Object
+  2;                                      !- Inlet Port
+
+OS:Connection,
+  {cdb3df2f-7cc4-4333-85ff-897960763d9b}, !- Handle
+  {8e182e1f-134b-410a-ba47-8b5dea617c11}, !- Source Object
+  2,                                      !- Outlet Port
+  {c81b7a2d-938c-4630-ac34-409efd9d7448}, !- Target Object
+  2;                                      !- Inlet Port
+
+OS:Sizing:System,
+  {7ac82dcf-f1f9-4c69-a9d9-cd7fabcecbb1}, !- Handle
+  {3b3a4004-4247-460f-a359-e97080aa3a1a}, !- AirLoop Name
+  ,                                       !- Type of Load to Size On
+  ,                                       !- Design Outdoor Air Flow Rate {m3/s}
+  0.3,                                    !- Central Heating Maximum System Air Flow Ratio
+  7,                                      !- Preheat Design Temperature {C}
+  0.008,                                  !- Preheat Design Humidity Ratio {kg-H2O/kg-Air}
+  12.8,                                   !- Precool Design Temperature {C}
+  0.008,                                  !- Precool Design Humidity Ratio {kg-H2O/kg-Air}
+  12.8,                                   !- Central Cooling Design Supply Air Temperature {C}
+  16.7,                                   !- Central Heating Design Supply Air Temperature {C}
+  ,                                       !- Sizing Option
+  Yes,                                    !- 100% Outdoor Air in Cooling
+  Yes,                                    !- 100% Outdoor Air in Heating
+  0.0085,                                 !- Central Cooling Design Supply Air Humidity Ratio {kg-H2O/kg-Air}
+  ,                                       !- Central Heating Design Supply Air Humidity Ratio {kg-H2O/kg-Air}
+  ,                                       !- Cooling Design Air Flow Method
+  ,                                       !- Cooling Design Air Flow Rate {m3/s}
+  ,                                       !- Heating Design Air Flow Method
+  ,                                       !- Heating Design Air Flow Rate {m3/s}
+  ,                                       !- System Outdoor Air Method
+  1,                                      !- Zone Maximum Outdoor Air Fraction {dimensionless}
+  0.0099676501,                           !- Cooling Supply Air Flow Rate Per Floor Area {m3/s-m2}
+  1,                                      !- Cooling Fraction of Autosized Cooling Supply Air Flow Rate
+  3.9475456e-05,                          !- Cooling Supply Air Flow Rate Per Unit Cooling Capacity {m3/s-W}
+  0.0099676501,                           !- Heating Supply Air Flow Rate Per Floor Area {m3/s-m2}
+  1,                                      !- Heating Fraction of Autosized Heating Supply Air Flow Rate
+  1,                                      !- Heating Fraction of Autosized Cooling Supply Air Flow Rate
+  3.1588213e-05,                          !- Heating Supply Air Flow Rate Per Unit Heating Capacity {m3/s-W}
+  CoolingDesignCapacity,                  !- Cooling Design Capacity Method
+  autosize,                               !- Cooling Design Capacity {W}
+  234.7,                                  !- Cooling Design Capacity Per Floor Area {W/m2}
+  1,                                      !- Fraction of Autosized Cooling Design Capacity
+  HeatingDesignCapacity,                  !- Heating Design Capacity Method
+  autosize,                               !- Heating Design Capacity {W}
+  157,                                    !- Heating Design Capacity Per Floor Area {W/m2}
+  1,                                      !- Fraction of Autosized Heating Design Capacity
+  OnOff,                                  !- Central Cooling Capacity Control Method
+  autosize;                               !- Occupant Diversity
+
+OS:AvailabilityManagerAssignmentList,
+  {71a021e2-a3f6-4617-8dad-68861bb07bb6}, !- Handle
+  Air Loop HVAC 1 AvailabilityManagerAssignmentList; !- Name
+
+OS:AirLoopHVAC:OutdoorAirSystem,
+  {43a0dc28-f072-4a2e-a3bd-291ddeacc9b3}, !- Handle
+  OA System,                              !- Name
+  {82e7cf04-aba5-4c7b-b065-0d02493dd3c9}, !- Controller Name
+  ,                                       !- Outdoor Air Equipment List Name
+  ,                                       !- Availability Manager List Name
+  {ea64c887-4d8a-4df2-95a2-3b928e4dce73}, !- Mixed Air Node Name
+  {30399427-b0d6-48ba-981a-94f9fcbb9707}, !- Outdoor Air Stream Node Name
+  {2edc5cb0-3454-4b40-8484-9662403ec00b}, !- Relief Air Stream Node Name
+  {c71c2fc4-28fa-47e1-b70d-d5a911c49c97}; !- Return Air Stream Node Name
+
+OS:Controller:OutdoorAir,
+  {82e7cf04-aba5-4c7b-b065-0d02493dd3c9}, !- Handle
+  Outdoor Air Controller,                 !- Name
+  ,                                       !- Relief Air Outlet Node Name
+  ,                                       !- Return Air Node Name
+  ,                                       !- Mixed Air Node Name
+  ,                                       !- Actuator Node Name
+  Autosize,                               !- Minimum Outdoor Air Flow Rate {m3/s}
+  Autosize,                               !- Maximum Outdoor Air Flow Rate {m3/s}
+  NoEconomizer,                           !- Economizer Control Type
+  ModulateFlow,                           !- Economizer Control Action Type
+  28,                                     !- Economizer Maximum Limit Dry-Bulb Temperature {C}
+  64000,                                  !- Economizer Maximum Limit Enthalpy {J/kg}
+  ,                                       !- Economizer Maximum Limit Dewpoint Temperature {C}
+  ,                                       !- Electronic Enthalpy Limit Curve Name
+  -100,                                   !- Economizer Minimum Limit Dry-Bulb Temperature {C}
+  NoLockout,                              !- Lockout Type
+  FixedMinimum,                           !- Minimum Limit Type
+  ,                                       !- Minimum Outdoor Air Schedule Name
+  ,                                       !- Minimum Fraction of Outdoor Air Schedule Name
+  {3aeae613-8f58-452e-8454-56073f470200}, !- Maximum Fraction of Outdoor Air Schedule Name
+  {a0f63ccb-332f-45c3-9bad-debcb59ebef7}, !- Controller Mechanical Ventilation
+  ,                                       !- Time of Day Economizer Control Schedule Name
+  No,                                     !- High Humidity Control
+  ,                                       !- Humidistat Control Zone Name
+  ,                                       !- High Humidity Outdoor Air Flow Ratio
+  ,                                       !- Control High Indoor Humidity Based on Outdoor Humidity Ratio
+  BypassWhenOAFlowGreaterThanMinimum,     !- Heat Recovery Bypass Control Type
+  InterlockedWithMechanicalCooling;       !- Economizer Operation Staging
+
+OS:Controller:MechanicalVentilation,
+  {a0f63ccb-332f-45c3-9bad-debcb59ebef7}, !- Handle
+  Controller Mechanical Ventilation 1,    !- Name
+  {93de6f80-ba78-4def-8cf8-4f9d4a0b6f39}, !- Availability Schedule
+  ,                                       !- Demand Controlled Ventilation
+  ZoneSum;                                !- System Outdoor Air Method
+
+OS:Node,
+  {03759cd4-76dd-44fe-9394-f86721237099}, !- Handle
+  Node 7,                                 !- Name
+  ,                                       !- Inlet Port
+  {30399427-b0d6-48ba-981a-94f9fcbb9707}; !- Outlet Port
+
+OS:Connection,
+  {30399427-b0d6-48ba-981a-94f9fcbb9707}, !- Handle
+  {03759cd4-76dd-44fe-9394-f86721237099}, !- Source Object
+  3,                                      !- Outlet Port
+  {43a0dc28-f072-4a2e-a3bd-291ddeacc9b3}, !- Target Object
+  6;                                      !- Inlet Port
+
+OS:Node,
+  {7141047f-81e9-4cb5-aacc-a650ad16d05d}, !- Handle
+  Node 8,                                 !- Name
+  {2edc5cb0-3454-4b40-8484-9662403ec00b}, !- Inlet Port
+  ;                                       !- Outlet Port
+
+OS:Connection,
+  {2edc5cb0-3454-4b40-8484-9662403ec00b}, !- Handle
+  {43a0dc28-f072-4a2e-a3bd-291ddeacc9b3}, !- Source Object
+  7,                                      !- Outlet Port
+  {7141047f-81e9-4cb5-aacc-a650ad16d05d}, !- Target Object
+  2;                                      !- Inlet Port
+
+OS:Connection,
+  {c71c2fc4-28fa-47e1-b70d-d5a911c49c97}, !- Handle
+  {62be3a8f-da44-47fd-a5c6-d9b0fe38071a}, !- Source Object
+  3,                                      !- Outlet Port
+  {43a0dc28-f072-4a2e-a3bd-291ddeacc9b3}, !- Target Object
+  8;                                      !- Inlet Port
+
+OS:AirTerminal:SingleDuct:VAV:NoReheat,
+  {a36b02bc-1650-4aea-b766-dfac38ced69b}, !- Handle
+  VAV No Rht,                             !- Name
+  {93de6f80-ba78-4def-8cf8-4f9d4a0b6f39}, !- Availability Schedule Name
+  {50dcc2a2-6823-4351-afa5-372cf5b948a7}, !- Air Outlet Node Name
+  {318edeb4-7b9b-4dec-9610-7d717513f966}, !- Air Inlet Node Name
+  0.04,                                   !- Maximum Air Flow Rate {m3/s}
+  Scheduled,                              !- Zone Minimum Air Flow Input Method
+  Autosize,                               !- Constant Minimum Air Flow Fraction
+  ,                                       !- Fixed Minimum Air Flow Rate {m3/s}
+  {6806329c-7e22-48d5-8d32-655a7cb8e08e}, !- Minimum Air Flow Fraction Schedule Name
+  No;                                     !- Control For Outdoor Air
+
+OS:Node,
+  {0f061d16-bf56-4bc6-9db4-960504e6cf74}, !- Handle
+  Node 9,                                 !- Name
+  {b53059a7-12c1-4092-b0cc-5fa26c6cf3e5}, !- Inlet Port
+  {318edeb4-7b9b-4dec-9610-7d717513f966}; !- Outlet Port
+
+OS:Connection,
+  {b53059a7-12c1-4092-b0cc-5fa26c6cf3e5}, !- Handle
+  {d12270cc-4902-4b2c-b9f6-50aeca1dff22}, !- Source Object
+  3,                                      !- Outlet Port
+  {0f061d16-bf56-4bc6-9db4-960504e6cf74}, !- Target Object
+  2;                                      !- Inlet Port
+
+OS:Connection,
+  {318edeb4-7b9b-4dec-9610-7d717513f966}, !- Handle
+  {0f061d16-bf56-4bc6-9db4-960504e6cf74}, !- Source Object
+  3,                                      !- Outlet Port
+  {a36b02bc-1650-4aea-b766-dfac38ced69b}, !- Target Object
+  4;                                      !- Inlet Port
+
+OS:Connection,
+  {50dcc2a2-6823-4351-afa5-372cf5b948a7}, !- Handle
+  {a36b02bc-1650-4aea-b766-dfac38ced69b}, !- Source Object
+  3,                                      !- Outlet Port
+  {5f6606cb-b9c2-40e9-97b4-0d3f0c542693}, !- Target Object
+  2;                                      !- Inlet Port
+
+OS:Node,
+  {b2251f33-2eee-43cf-aa0f-30b752872746}, !- Handle
+  Node 10,                                !- Name
+  {3a3e6c9e-d44a-4760-8626-e79ce950c4f9}, !- Inlet Port
+  {990f9a65-5add-42dd-8483-a7b3752049e3}; !- Outlet Port
+
+OS:Connection,
+  {598ad24f-4bf6-43e6-89c8-f9a4ed4f8bbc}, !- Handle
+  {5f6606cb-b9c2-40e9-97b4-0d3f0c542693}, !- Source Object
+  3,                                      !- Outlet Port
+  {9920f6ca-18cd-4b5a-9d62-4949ef488945}, !- Target Object
+  2;                                      !- Inlet Port
+
+OS:Connection,
+  {3a3e6c9e-d44a-4760-8626-e79ce950c4f9}, !- Handle
+  {3ed9d60e-d636-429e-aa4a-f9730306fdbf}, !- Source Object
+  2,                                      !- Outlet Port
+  {b2251f33-2eee-43cf-aa0f-30b752872746}, !- Target Object
+  2;                                      !- Inlet Port
+
+OS:Connection,
+  {990f9a65-5add-42dd-8483-a7b3752049e3}, !- Handle
+  {b2251f33-2eee-43cf-aa0f-30b752872746}, !- Source Object
+  3,                                      !- Outlet Port
+  {8e182e1f-134b-410a-ba47-8b5dea617c11}, !- Target Object
+  3;                                      !- Inlet Port
+
+OS:Coil:Heating:DX:SingleSpeed,
+  {7b2ef911-ca34-4831-8e37-e41babc71c88}, !- Handle
+  1 Spd DX Htg Coil,                      !- Name
+  {93de6f80-ba78-4def-8cf8-4f9d4a0b6f39}, !- Availability Schedule Name
+  Autosize,                               !- Rated Total Heating Capacity {W}
+  5,                                      !- Rated COP {W/W}
+  Autosize,                               !- Rated Air Flow Rate {m3/s}
+  773.3,                                  !- Rated Supply Fan Power Per Volume Flow Rate 2017 {W/(m3/s)}
+  934.4,                                  !- Rated Supply Fan Power Per Volume Flow Rate 2023 {W/(m3/s)}
+  {acd7e47a-c434-4dc6-97c9-640e51873aee}, !- Air Inlet Node Name
+  {87b4d5be-cdcd-4c70-95ee-9e199145e390}, !- Air Outlet Node Name
+  {2d2f548b-9b64-4842-a7c1-0f40544eab40}, !- Total Heating Capacity Function of Temperature Curve Name
+  {21710328-e39e-40d1-bce5-e632696b2023}, !- Total Heating Capacity Function of Flow Fraction Curve Name
+  {84daa457-f1c0-495b-a292-d7cbfc263ee5}, !- Energy Input Ratio Function of Temperature Curve Name
+  {9e9919ec-1a05-4718-873f-0ca7063a9932}, !- Energy Input Ratio Function of Flow Fraction Curve Name
+  {84bff511-76ee-47a8-a5ea-c0c7657a1615}, !- Part Load Fraction Correlation Curve Name
+  ,                                       !- Defrost Energy Input Ratio Function of Temperature Curve Name
+  ,                                       !- Minimum Outdoor Dry-Bulb Temperature for Compressor Operation {C}
+  ,                                       !- Maximum Outdoor Dry-Bulb Temperature for Defrost Operation {C}
+  ,                                       !- Crankcase Heater Capacity {W}
+  ,                                       !- Crankcase Heater Capacity Function of Temperature Curve Name
+  ,                                       !- Maximum Outdoor Dry-Bulb Temperature for Crankcase Heater Operation {C}
+  Resistive,                              !- Defrost Strategy
+  Timed,                                  !- Defrost Control
+  0.16666700000000001,                    !- Defrost Time Period Fraction
+  2000;                                   !- Resistive Defrost Heater Capacity {W}
+
+OS:Curve:Biquadratic,
+  {2d2f548b-9b64-4842-a7c1-0f40544eab40}, ! Handle
+  OS:Curve:Biquadratic 7,                 ! Name
+  0.75874600000000003,                    ! Coefficient1 Constant
+  0,                                      ! Coefficient2 x
+  0,                                      ! Coefficient3 x**2
+  0.027626000000000001,                   ! Coefficient4 y
+  0.00014871599999999999,                 ! Coefficient5 y**2
+  0,                                      ! Coefficient6 x*y
+  0,                                      ! Minimum Value of x {BasedOnField A2}
+  1,                                      ! Maximum Value of x {BasedOnField A2}
+  0,                                      ! Minimum Value of y {BasedOnField A3}
+  1;                                      ! Maximum Value of y {BasedOnField A3}
+
+OS:Curve:Quadratic,
+  {21710328-e39e-40d1-bce5-e632696b2023}, ! Handle
+  OS:Curve:Quadratic 8,                   ! Name
+  0.83999999999999997,                    ! Coefficient1 Constant
+  0.16,                                   ! Coefficient2 x
+  0,                                      ! Coefficient3 x**2
+  0.5,                                    ! Minimum Value of x {BasedOnField A2}
+  1.5;                                    ! Maximum Value of x {BasedOnField A2}
+
+OS:Curve:Biquadratic,
+  {84daa457-f1c0-495b-a292-d7cbfc263ee5}, ! Handle
+  OS:Curve:Biquadratic 8,                 ! Name
+  1.19248,                                ! Coefficient1 Constant
+  -0.030043799999999999,                  ! Coefficient2 x
+  0.0010374500000000001,                  ! Coefficient3 x**2
+  0,                                      ! Coefficient4 y
+  0,                                      ! Coefficient5 y**2
+  0,                                      ! Coefficient6 x*y
+  -20,                                    ! Minimum Value of x {BasedOnField A2}
+  20,                                     ! Maximum Value of x {BasedOnField A2}
+  0,                                      ! Minimum Value of y {BasedOnField A3}
+  1;                                      ! Maximum Value of y {BasedOnField A3}
+
+OS:Curve:Quadratic,
+  {9e9919ec-1a05-4718-873f-0ca7063a9932}, ! Handle
+  OS:Curve:Quadratic 9,                   ! Name
+  1.3824000000000001,                     ! Coefficient1 Constant
+  -0.43359999999999999,                   ! Coefficient2 x
+  0.051200000000000002,                   ! Coefficient3 x**2
+  0,                                      ! Minimum Value of x {BasedOnField A2}
+  1;                                      ! Maximum Value of x {BasedOnField A2}
+
+OS:Curve:Quadratic,
+  {84bff511-76ee-47a8-a5ea-c0c7657a1615}, ! Handle
+  OS:Curve:Quadratic 10,                  ! Name
+  0.84999999999999998,                    ! Coefficient1 Constant
+  0.14999999999999999,                    ! Coefficient2 x
+  0,                                      ! Coefficient3 x**2
+  0,                                      ! Minimum Value of x {BasedOnField A2}
+  1;                                      ! Maximum Value of x {BasedOnField A2}
+
+OS:Node,
+  {ad9ac373-19e8-47c4-b838-1667e738eb1d}, !- Handle
+  Node 11,                                !- Name
+  {ea64c887-4d8a-4df2-95a2-3b928e4dce73}, !- Inlet Port
+  {33ea9085-12f4-4cda-ba80-b027d9be3374}; !- Outlet Port
+
+OS:Connection,
+  {ea64c887-4d8a-4df2-95a2-3b928e4dce73}, !- Handle
+  {43a0dc28-f072-4a2e-a3bd-291ddeacc9b3}, !- Source Object
+  5,                                      !- Outlet Port
+  {ad9ac373-19e8-47c4-b838-1667e738eb1d}, !- Target Object
+  2;                                      !- Inlet Port
+
+OS:Coil:Cooling:DX:TwoSpeed,
+  {67a50707-7453-4cd5-8ced-fe8833ca4779}, !- Handle
+  2 Spd DX Clg Coil,                      !- Name
+  {93de6f80-ba78-4def-8cf8-4f9d4a0b6f39}, !- Availability Schedule Name
+  Autosize,                               !- Rated High Speed Total Cooling Capacity {W}
+  Autosize,                               !- Rated High Speed Sensible Heat Ratio
+  3,                                      !- Rated High Speed COP {W/W}
+  Autosize,                               !- Rated High Speed Air Flow Rate {m3/s}
+  773.3,                                  !- Rated High Speed Evaporator Fan Power Per Volume Flow Rate 2017 {W/(m3/s)}
+  934.4,                                  !- Rated High Speed Evaporator Fan Power Per Volume Flow Rate 2023 {W/(m3/s)}
+  773.3,                                  !- Unit Internal Static Air Pressure {Pa}
+  {96009c16-5ed1-4650-9094-866a5eb87357}, !- Air Inlet Node Name
+  {37fcf438-c8b8-48da-a366-40a84c988ec6}, !- Air Outlet Node Name
+  {815618f9-8ef7-4077-b2e9-dd0692cc71ae}, !- Total Cooling Capacity Function of Temperature Curve Name
+  {1790aa1e-26f4-4c57-89c4-b4da5382f03f}, !- Total Cooling Capacity Function of Flow Fraction Curve Name
+  {9ac2be23-2749-44dd-8d40-98f5a850d67d}, !- Energy Input Ratio Function of Temperature Curve Name
+  {0aa6a71c-489d-486e-b777-18efc1542ca5}, !- Energy Input Ratio Function of Flow Fraction Curve Name
+  {1e8a0b3e-8da3-4f4f-990f-4b6a9792232a}, !- Part Load Fraction Correlation Curve Name
+  Autosize,                               !- Rated Low Speed Total Cooling Capacity {W}
+  0.69,                                   !- Rated Low Speed Sensible Heat Ratio
+  3,                                      !- Rated Low Speed COP {W/W}
+  ,                                       !- Rated Low Speed Air Flow Rate {m3/s}
+  773.3,                                  !- Rated Low Speed Evaporator Fan Power Per Volume Flow Rate 2017 {W/(m3/s)}
+  934.4,                                  !- Rated Low Speed Evaporator Fan Power Per Volume Flow Rate 2023 {W/(m3/s)}
+  {dc61a9c1-b56e-47e0-b0a8-93f0483aebfc}, !- Low Speed Total Cooling Capacity Function of Temperature Curve Name
+  {ee485931-5c7e-487e-8838-077ac7ab388f}, !- Low Speed Energy Input Ratio Function of Temperature Curve Name
+  ,                                       !- Condenser Air Inlet Node Name
+  AirCooled,                              !- Condenser Type
+  -25,                                    !- Minimum Outdoor Dry-Bulb Temperature for Compressor Operation {C}
+  0,                                      !- High Speed Evaporative Condenser Effectiveness {dimensionless}
+  Autosize,                               !- High Speed Evaporative Condenser Air Flow Rate {m3/s}
+  Autosize,                               !- High Speed Evaporative Condenser Pump Rated Power Consumption {W}
+  0,                                      !- Low Speed Evaporative Condenser Effectiveness {dimensionless}
+  Autosize,                               !- Low Speed Evaporative Condenser Air Flow Rate {m3/s}
+  Autosize,                               !- Low Speed Evaporative Condenser Pump Rated Power Consumption {W}
+  ,                                       !- Supply Water Storage Tank Name
+  ,                                       !- Condensate Collection Water Storage Tank Name
+  10,                                     !- Basin Heater Capacity {W/K}
+  2,                                      !- Basin Heater Setpoint Temperature {C}
+  ;                                       !- Basin Heater Operating Schedule Name
+
+OS:Curve:Biquadratic,
+  {815618f9-8ef7-4077-b2e9-dd0692cc71ae}, ! Handle
+  OS:Curve:Biquadratic 25,                ! Name
+  0.42415,                                ! Coefficient1 Constant
+  0.04426,                                ! Coefficient2 x
+  -0.00042,                               ! Coefficient3 x**2
+  0.00333,                                ! Coefficient4 y
+  -8e-005,                                ! Coefficient5 y**2
+  -0.00021,                               ! Coefficient6 x*y
+  17,                                     ! Minimum Value of x {BasedOnField A2}
+  22,                                     ! Maximum Value of x {BasedOnField A2}
+  13,                                     ! Minimum Value of y {BasedOnField A3}
+  46;                                     ! Maximum Value of y {BasedOnField A3}
+
+OS:Curve:Quadratic,
+  {1790aa1e-26f4-4c57-89c4-b4da5382f03f}, ! Handle
+  OS:Curve:Quadratic 20,                  ! Name
+  0.77136,                                ! Coefficient1 Constant
+  0.34053,                                ! Coefficient2 x
+  -0.11088,                               ! Coefficient3 x**2
+  0.75918,                                ! Minimum Value of x {BasedOnField A2}
+  1.13877;                                ! Maximum Value of x {BasedOnField A2}
+
+OS:Curve:Biquadratic,
+  {9ac2be23-2749-44dd-8d40-98f5a850d67d}, ! Handle
+  OS:Curve:Biquadratic 22,                ! Name
+  1.23649,                                ! Coefficient1 Constant
+  -0.02431,                               ! Coefficient2 x
+  0.00057,                                ! Coefficient3 x**2
+  -0.01434,                               ! Coefficient4 y
+  0.00063,                                ! Coefficient5 y**2
+  -0.00038,                               ! Coefficient6 x*y
+  17,                                     ! Minimum Value of x {BasedOnField A2}
+  22,                                     ! Maximum Value of x {BasedOnField A2}
+  13,                                     ! Minimum Value of y {BasedOnField A3}
+  46;                                     ! Maximum Value of y {BasedOnField A3}
+
+OS:Curve:Quadratic,
+  {0aa6a71c-489d-486e-b777-18efc1542ca5}, ! Handle
+  OS:Curve:Quadratic 21,                  ! Name
+  1.2055,                                 ! Coefficient1 Constant
+  -0.32953,                               ! Coefficient2 x
+  0.12308,                                ! Coefficient3 x**2
+  0.75918,                                ! Minimum Value of x {BasedOnField A2}
+  1.13877;                                ! Maximum Value of x {BasedOnField A2}
+
+OS:Curve:Quadratic,
+  {1e8a0b3e-8da3-4f4f-990f-4b6a9792232a}, ! Handle
+  OS:Curve:Quadratic 22,                  ! Name
+  0.771,                                  ! Coefficient1 Constant
+  0.229,                                  ! Coefficient2 x
+  0,                                      ! Coefficient3 x**2
+  0,                                      ! Minimum Value of x {BasedOnField A2}
+  1;                                      ! Maximum Value of x {BasedOnField A2}
+
+OS:Curve:Biquadratic,
+  {dc61a9c1-b56e-47e0-b0a8-93f0483aebfc}, ! Handle
+  OS:Curve:Biquadratic 23,                ! Name
+  0.42415,                                ! Coefficient1 Constant
+  0.04426,                                ! Coefficient2 x
+  -0.00042,                               ! Coefficient3 x**2
+  0.00333,                                ! Coefficient4 y
+  -0.00008,                               ! Coefficient5 y**2
+  -0.00021,                               ! Coefficient6 x*y
+  17.0,                                   ! Minimum Value of x {BasedOnField A2}
+  22.0,                                   ! Maximum Value of x {BasedOnField A2}
+  13.0,                                   ! Minimum Value of y {BasedOnField A3}
+  46.0;                                   ! Maximum Value of y {BasedOnField A3}
+
+OS:Curve:Biquadratic,
+  {ee485931-5c7e-487e-8838-077ac7ab388f}, ! Handle
+  OS:Curve:Biquadratic 24,                ! Name
+  1.23649,                                ! Coefficient1 Constant
+  -0.02431,                               ! Coefficient2 x
+  0.00057,                                ! Coefficient3 x**2
+  -0.01434,                               ! Coefficient4 y
+  0.00063,                                ! Coefficient5 y**2
+  -0.00038,                               ! Coefficient6 x*y
+  17.0,                                   ! Minimum Value of x {BasedOnField A2}
+  22.0,                                   ! Maximum Value of x {BasedOnField A2}
+  13.0,                                   ! Minimum Value of y {BasedOnField A3}
+  46.0;                                   ! Maximum Value of y {BasedOnField A3}
+
+OS:Node,
+  {a7560ef7-9395-47a3-8ecc-df32bed44d58}, !- Handle
+  Node 12,                                !- Name
+  {87b4d5be-cdcd-4c70-95ee-9e199145e390}, !- Inlet Port
+  {96009c16-5ed1-4650-9094-866a5eb87357}; !- Outlet Port
+
+OS:Connection,
+  {87b4d5be-cdcd-4c70-95ee-9e199145e390}, !- Handle
+  {7b2ef911-ca34-4831-8e37-e41babc71c88}, !- Source Object
+  9,                                      !- Outlet Port
+  {a7560ef7-9395-47a3-8ecc-df32bed44d58}, !- Target Object
+  2;                                      !- Inlet Port
+
+OS:Connection,
+  {96009c16-5ed1-4650-9094-866a5eb87357}, !- Handle
+  {a7560ef7-9395-47a3-8ecc-df32bed44d58}, !- Source Object
+  3,                                      !- Outlet Port
+  {67a50707-7453-4cd5-8ced-fe8833ca4779}, !- Target Object
+  10;                                     !- Inlet Port
+
+OS:Connection,
+  {37fcf438-c8b8-48da-a366-40a84c988ec6}, !- Handle
+  {67a50707-7453-4cd5-8ced-fe8833ca4779}, !- Source Object
+  11,                                     !- Outlet Port
+  {c5c468f0-52fe-42e9-8fb7-042e87ab61c8}, !- Target Object
+  2;                                      !- Inlet Port
+
+OS:Fan:VariableVolume,
+  {01df4398-bbb0-4d41-a3bd-cc32404b1401}, ! Handle
+  Var Spd Fan,                            ! Name
+  {93de6f80-ba78-4def-8cf8-4f9d4a0b6f39}, ! Availability Schedule Name
+  0.60450000000000004,                    ! Fan Efficiency
+  1017.592,                               ! Pressure Rise {Pa}
+  Autosize,                               ! Maximum Flow Rate {m3/s}
+  FixedFlowRate,                          ! Fan Power Minimum Flow Rate Input Method
+  0,                                      ! Fan Power Minimum Flow Fraction
+  0,                                      ! Fan Power Minimum Air Flow Rate {m3/s}
+  0.93000000000000005,                    ! Motor Efficiency
+  1,                                      ! Motor In Airstream Fraction
+  0.040759893999999998,                   ! Fan Power Coefficient 1
+  0.08804497,                             ! Fan Power Coefficient 2
+  -0.072926119999999997,                  ! Fan Power Coefficient 3
+  0.94373982300000003,                    ! Fan Power Coefficient 4
+  0,                                      ! Fan Power Coefficient 5
+  {33ea9085-12f4-4cda-ba80-b027d9be3374}, ! Air Inlet Node Name
+  {78f6d083-39ed-4733-9200-1d4e05329da5}, ! Air Outlet Node Name
+  ;                                       ! End-Use Subcategory
+
+OS:Node,
+  {2623a8bd-5096-4411-82be-ff9a67ae304a}, !- Handle
+  Node 13,                                !- Name
+  {78f6d083-39ed-4733-9200-1d4e05329da5}, !- Inlet Port
+  {acd7e47a-c434-4dc6-97c9-640e51873aee}; !- Outlet Port
+
+OS:Connection,
+  {33ea9085-12f4-4cda-ba80-b027d9be3374}, !- Handle
+  {ad9ac373-19e8-47c4-b838-1667e738eb1d}, !- Source Object
+  3,                                      !- Outlet Port
+  {01df4398-bbb0-4d41-a3bd-cc32404b1401}, !- Target Object
+  16;                                     !- Inlet Port
+
+OS:Connection,
+  {78f6d083-39ed-4733-9200-1d4e05329da5}, !- Handle
+  {01df4398-bbb0-4d41-a3bd-cc32404b1401}, !- Source Object
+  17,                                     !- Outlet Port
+  {2623a8bd-5096-4411-82be-ff9a67ae304a}, !- Target Object
+  2;                                      !- Inlet Port
+
+OS:Connection,
+  {acd7e47a-c434-4dc6-97c9-640e51873aee}, !- Handle
+  {2623a8bd-5096-4411-82be-ff9a67ae304a}, !- Source Object
+  3,                                      !- Outlet Port
+  {7b2ef911-ca34-4831-8e37-e41babc71c88}, !- Target Object
+  8;                                      !- Inlet Port
+
+OS:SetpointManager:SingleZone:Reheat,
+  {b1cbbf8e-5eb7-4e20-9452-999a58dcfbaf}, ! Handle
+  Single Zone Reheat Temp,                ! Name
+  -99,                                    ! Minimum Supply Air Temperature {C}
+  99,                                     ! Maximum Supply Air Temperature {C}
+  {e6ce75cb-a91a-4e15-aec3-43479fc9b1b1}, ! Control Zone Name
+  {c5c468f0-52fe-42e9-8fb7-042e87ab61c8}, ! Setpoint Node or NodeList Name
+  Temperature;                            !- Control Variable
 
